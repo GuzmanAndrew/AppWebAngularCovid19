@@ -1,0 +1,3 @@
+<div [class.app-dark-theme]="darkTheme" [class.app-light-theme]="!darkTheme">
+  <app-main #main (messageEvent)="onDataReceived($event)"></app-main>
+</div>

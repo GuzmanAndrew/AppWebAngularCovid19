@@ -1,0 +1,93 @@
+<div class="app__charts">
+    <igx-bottom-nav class="app__charts-tabs">
+        <igx-tab-panel label="Time Line Chart">
+            <div class="app__chart-wrapper">
+                <igx-legend class="app__charts-legend" #legendActual orientation="Horizontal"></igx-legend>
+                <div class="app__chart-component">
+                    <igx-data-chart class="app__charts-chart" crosshairVisibility="visible" #chartActual [legend]="legendActual"
+                        [dataSource]="chartData" isHorizontalZoomEnabled="true">
+                        <igx-category-x-axis label="date" title="Date" #xAxis2 [formatLabel]="formatDateLabel">
+                        </igx-category-x-axis>
+                        <igx-numeric-y-axis name="yAxis2" #yAxis2 title="Cases count" abbreviateLargeNumbers="true">
+                        </igx-numeric-y-axis>
+
+                        <igx-line-series name="seriesTotalDailyOtherLocations" title="Total Locations"
+                            [xAxis]="xAxis2" [yAxis]="yAxis2" valueMemberPath="totalDailyOtherLocations"
+                            [markerType]="3" showDefaultTooltip="true">
+                        </igx-line-series>
+                        <igx-line-series name="seriesTotalDailyChina" title="Total Locations Accepted" [xAxis]="xAxis2"
+                            [yAxis]="yAxis2" valueMemberPath="totalDailyChina" [markerType]="3"
+                            showDefaultTooltip="true">
+                        </igx-line-series>
+                        <igx-line-series name="seriesTotalDailyRecoveredCases" title="Total Locations Refusals"
+                            [xAxis]="xAxis2" [yAxis]="yAxis2" valueMemberPath="totalDailyRecoveredCases"
+                            [markerType]="3" showDefaultTooltip="true">
+                        </igx-line-series>
+                    </igx-data-chart>
+                </div>
+            </div>
+        </igx-tab-panel>
+    </igx-bottom-nav>
+</div>
+
+<ng-template let-series="series" let-item="item" #tooltipActualChart>
+    <div class="app__map-tooltip">
+        <ul class="app__map-tooltip-list">
+            <li class="deaths" *ngIf="series.name == 'seriesTotalDailyOtherLocations'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>
+                  Total Daily Other Locations:
+                  <span>{{ item.totalDailyOtherLocations| number }}</span>
+                </div>
+            </li>
+            <li class="infected" *ngIf="series.name == 'seriesTotalDailyChina'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>
+                  Total Daily China:
+                  <span>{{ item.totalDailyChina | number }}</span>
+                </div>
+            </li>
+            <li class="recovered" *ngIf="series.name == 'seriesTotalDailyRecoveredCases'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>
+                  Total Daily Recovered Cases:
+                  <span>{{ item.totalDailyRecoveredCases | number }}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</ng-template>
+
+<ng-template let-series="series" let-item="item" #tooltipLogarithmicChart>
+    <div class="app__map-tooltip">
+        <ul class="app__map-tooltip-list">
+            <li class="deaths" *ngIf="series.name == 'seriesTotalDailyOtherLocations'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>Total Daily Other Locations: <span> {{ item.totalDailyOtherLocations | number }} </span></div>
+            </li>
+            <li class="infected" *ngIf="series.name == 'seriesTotalDailyChina'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>Total Daily China:<span > {{ item.totalDailyChina | number }} </span></div>
+            </li>
+            <li class="recovered" *ngIf="series.name == 'seriesTotalDailyRecoveredCases'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>Total Daily Recovered Cases: <span> {{ item.totalDailyRecoveredCases | number }} </span></div>
+            </li>
+        </ul>
+    </div>
+</ng-template>
+
+<ng-template let-series="series" let-item="item" #tooltipDailyChart>
+    <div class="app__map-tooltip">
+        <ul class="app__map-tooltip-list">
+            <li class="infected" *ngIf="series.valueMemberPath == 'activeCases'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>New Confirmed Cases:<span class="infected"> {{ item.activeCases | number }} </span></div>
+            </li>
+            <li class="recovered" *ngIf="series.valueMemberPath == 'recoveredCases'">
+                <div>{{ formatDateLabel(item) }}</div>
+                <div>Recovered Cases:<span class="infected"> {{ item.recoveredCases | number }} </span></div>
+            </li>
+        </ul>
+    </div>
+</ng-template>

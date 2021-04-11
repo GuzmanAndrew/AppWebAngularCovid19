@@ -1,0 +1,16 @@
+<main class="app__main-inner">
+    <div class="app__row app__row--left">
+      <app-list-cases class="app__list--confirmed" #confirmedList type="Respondents" (regionSelected)="onRegionSelected($event)"></app-list-cases>
+      <section class="app__col app__col--map">
+        <app-map-cases #map></app-map-cases>
+      </section>
+    </div>
+
+    <div class="app__col app__col--stats">
+        <div class="app__row app__list-stack">
+            <app-list-cases class="app__list--deaths" #deathsList type="Accepted" (regionSelected)="onRegionSelected($event)"></app-list-cases>
+            <app-list-cases class="app__list--recovered" #recoveredList type="Refusals" (regionSelected)="onRegionSelected($event)"></app-list-cases>
+        </div>
+        <app-timeline-chart class="app-timeline-chart" #charts></app-timeline-chart>
+    </div>
+</main>
